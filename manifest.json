@@ -2,24 +2,29 @@
   "name": "Gamer Booster",
   "short_name": "Gamer Booster",
   "description": "Gaming utility app for gamers.",
-  "start_url": "./",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#080b0f",
   "theme_color": "#080b0f",
+  "lang": "id-ID",
+  "categories": [
+    "games",
+    "utilities"
+  ],
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }
