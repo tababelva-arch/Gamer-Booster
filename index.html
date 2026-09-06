@@ -1,0 +1,2069 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Gamer Booster V5.1</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+:root{
+    --bg:#080b0f;
+    --card:#10151b;
+    --card2:#151b22;
+    --border:#202832;
+    --text:#d8dee5;
+    --muted:#7d8792;
+    --blue:#4da3ff;
+    --blue2:#247fd0;
+    --green:#52d273;
+    --red:#ff5c67;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+button{
+    font-family:inherit;
+}
+
+.app{
+    width:100%;
+    max-width:600px;
+    margin:auto;
+    min-height:100vh;
+    padding-bottom:90px;
+}
+
+/* HEADER */
+
+.header{
+    padding:22px 18px 14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:21px;
+    font-weight:800;
+    letter-spacing:.3px;
+}
+
+.logo span{
+    color:var(--blue);
+}
+
+.status{
+    font-size:11px;
+    color:var(--muted);
+}
+
+/* PAGES */
+
+.page{
+    display:none;
+    padding:0 16px;
+}
+
+.page.active{
+    display:block;
+}
+
+/* TITLES */
+
+.page-title{
+    font-size:26px;
+    font-weight:800;
+    margin:10px 0 5px;
+}
+
+.page-subtitle{
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:18px;
+}
+
+/* CARDS */
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:17px;
+    margin-bottom:13px;
+}
+
+.card-title{
+    font-size:14px;
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.card-desc{
+    font-size:12px;
+    color:var(--muted);
+    line-height:1.5;
+}
+
+/* AD */
+
+.ad-box{
+    min-height:72px;
+    border:1px dashed #303944;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#626d78;
+    font-size:11px;
+    margin-bottom:14px;
+    background:#0c1015;
+}
+
+.ad-box.hidden{
+    display:none;
+}
+
+/* GAME SELECT */
+
+.game-select{
+    width:100%;
+    background:var(--card2);
+    border:1px solid var(--border);
+    color:var(--text);
+    border-radius:13px;
+    padding:14px;
+    outline:none;
+    font-size:14px;
+}
+
+/* BOOST */
+
+.boost-card{
+    text-align:center;
+    padding:22px 15px;
+}
+
+.boost-circle{
+    width:190px;
+    height:190px;
+    border-radius:50%;
+    margin:18px auto;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    border:5px solid #1c2b3a;
+    background:
+        radial-gradient(circle,#101923 0%,#0b1016 70%);
+    box-shadow:
+        0 0 0 8px #0d131a,
+        0 0 35px rgba(77,163,255,.08);
+}
+
+.boost-circle.running{
+    border-color:var(--blue);
+    box-shadow:
+        0 0 0 8px #0d131a,
+        0 0 40px rgba(77,163,255,.25);
+}
+
+.boost-main{
+    font-size:28px;
+    font-weight:900;
+    color:var(--blue);
+}
+
+.boost-time{
+    font-size:13px;
+    color:var(--muted);
+    margin-top:4px;
+}
+
+.boost-button{
+    width:100%;
+    padding:15px;
+    border:0;
+    border-radius:13px;
+    background:var(--blue);
+    color:#06111c;
+    font-size:14px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.boost-button:active{
+    transform:scale(.98);
+}
+
+.boost-button.stop{
+    background:#252d36;
+    color:var(--text);
+}
+
+/* PROGRESS */
+
+.progress{
+    width:100%;
+    height:5px;
+    background:#202832;
+    border-radius:10px;
+    overflow:hidden;
+    margin:14px 0 2px;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+    background:var(--blue);
+    transition:.2s;
+}
+
+/* QUICK ACTION */
+
+.section-title{
+    font-size:13px;
+    font-weight:800;
+    margin:19px 0 10px;
+}
+
+.quick-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.quick{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:15px;
+    cursor:pointer;
+}
+
+.quick:active{
+    transform:scale(.98);
+}
+
+.quick-icon{
+    width:38px;
+    height:38px;
+    border-radius:11px;
+    background:#17202a;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--blue);
+    font-size:13px;
+    font-weight:900;
+    margin-bottom:10px;
+}
+
+.quick-name{
+    font-size:13px;
+    font-weight:700;
+}
+
+.quick-value{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:4px;
+}
+
+/* MODES */
+
+.mode{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:13px 0;
+    border-bottom:1px solid #1b222a;
+}
+
+.mode:last-child{
+    border-bottom:0;
+}
+
+.mode-info{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+}
+
+.mode-name{
+    font-size:13px;
+    font-weight:700;
+}
+
+.mode-desc{
+    color:var(--muted);
+    font-size:11px;
+}
+
+/* SWITCH */
+
+.switch{
+    position:relative;
+    width:44px;
+    height:25px;
+    flex-shrink:0;
+}
+
+.switch input{
+    display:none;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+    background:#29323c;
+    border-radius:30px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.slider:before{
+    content:"";
+    position:absolute;
+    width:19px;
+    height:19px;
+    left:3px;
+    top:3px;
+    background:#9ba5af;
+    border-radius:50%;
+    transition:.2s;
+}
+
+.switch input:checked + .slider{
+    background:var(--blue2);
+}
+
+.switch input:checked + .slider:before{
+    transform:translateX(19px);
+    background:white;
+}
+
+/* PREMIUM */
+
+.premium-card{
+    border:1px solid #31506b;
+    background:
+        linear-gradient(145deg,#111b25,#0e1319);
+}
+
+.premium-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.premium-title{
+    font-size:17px;
+    font-weight:900;
+}
+
+.premium-badge{
+    font-size:9px;
+    font-weight:900;
+    color:var(--blue);
+    border:1px solid #31506b;
+    padding:5px 7px;
+    border-radius:7px;
+}
+
+.premium-list{
+    margin:13px 0;
+    color:var(--muted);
+    font-size:12px;
+    line-height:2;
+}
+
+.premium-button{
+    width:100%;
+    border:0;
+    padding:13px;
+    border-radius:12px;
+    background:var(--blue);
+    color:#06111c;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.premium-button:disabled{
+    opacity:.55;
+    cursor:default;
+}
+
+.restore-button{
+    width:100%;
+    margin-top:8px;
+    border:1px solid var(--border);
+    background:#141a21;
+    color:var(--text);
+    padding:12px;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+/* GAME LIST */
+
+.game-list{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+}
+
+.game-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    cursor:pointer;
+}
+
+.game-item.selected{
+    border-color:#315f88;
+    background:#101a24;
+}
+
+.game-icon{
+    width:43px;
+    height:43px;
+    border-radius:12px;
+    background:#18212b;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    font-weight:900;
+    color:var(--blue);
+}
+
+.game-name{
+    font-size:13px;
+    font-weight:700;
+}
+
+.game-status{
+    font-size:10px;
+    color:var(--muted);
+    margin-top:3px;
+}
+
+/* DEVICE */
+
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    padding:12px 0;
+    border-bottom:1px solid #1b222a;
+}
+
+.info-row:last-child{
+    border-bottom:0;
+}
+
+.info-label{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.info-value{
+    font-size:12px;
+    text-align:right;
+    word-break:break-word;
+}
+
+/* SETTINGS */
+
+.setting-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 0;
+    border-bottom:1px solid #1b222a;
+}
+
+.setting-row:last-child{
+    border-bottom:0;
+}
+
+.setting-name{
+    font-size:13px;
+    font-weight:700;
+}
+
+.setting-desc{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:3px;
+}
+
+/* NAV */
+
+.bottom-nav{
+    position:fixed;
+    z-index:100;
+    left:50%;
+    bottom:12px;
+    transform:translateX(-50%);
+    width:calc(100% - 24px);
+    max-width:570px;
+    height:65px;
+    background:#0d1217;
+    border:1px solid var(--border);
+    border-radius:20px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    box-shadow:0 10px 35px rgba(0,0,0,.45);
+}
+
+.nav-btn{
+    border:0;
+    background:none;
+    color:#68727d;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    cursor:pointer;
+}
+
+.nav-btn.active{
+    color:var(--blue);
+}
+
+.nav-icon{
+    font-size:13px;
+    font-weight:900;
+}
+
+.nav-text{
+    font-size:9px;
+}
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+    z-index:200;
+    left:50%;
+    bottom:90px;
+    transform:translate(-50%,20px);
+    opacity:0;
+    pointer-events:none;
+    background:#151b22;
+    border:1px solid var(--border);
+    color:var(--text);
+    padding:11px 15px;
+    border-radius:11px;
+    font-size:11px;
+    transition:.25s;
+    max-width:85%;
+    text-align:center;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translate(-50%,0);
+}
+
+/* DARK MODE OFF */
+
+body.light{
+    --bg:#f2f4f7;
+    --card:#ffffff;
+    --card2:#f7f8fa;
+    --border:#dce1e6;
+    --text:#20262d;
+    --muted:#69737d;
+}
+
+body.light .bottom-nav{
+    background:#fff;
+}
+
+body.light .ad-box{
+    background:#f8f9fa;
+}
+
+body.light .boost-circle{
+    background:#fff;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:360px){
+    .boost-circle{
+        width:165px;
+        height:165px;
+    }
+
+    .page-title{
+        font-size:23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+    <div class="logo">GAMER <span>BOOSTER</span></div>
+    <div class="status" id="headerStatus">READY</div>
+</header>
+
+
+<!-- ================= HOME ================= -->
+
+<section class="page active" id="homePage">
+
+    <h1 class="page-title">Gaming Center</h1>
+    <p class="page-subtitle">
+        Optimalkan sesi gaming kamu.
+    </p>
+
+    <!-- AD -->
+    <div class="ad-box" id="adBanner">
+        Advertisement
+    </div>
+
+    <div class="card">
+
+        <div class="card-title">SELECT GAME</div>
+
+        <select class="game-select" id="gameSelect">
+            <option>Mobile Legends</option>
+            <option>PUBG Mobile</option>
+            <option>Free Fire</option>
+            <option>Roblox</option>
+            <option>Minecraft</option>
+        </select>
+
+    </div>
+
+
+    <div class="card boost-card">
+
+        <div class="card-title">BOOST SESSION</div>
+
+        <div class="boost-circle" id="boostCircle">
+
+            <div class="boost-main" id="boostText">
+                BOOST
+            </div>
+
+            <div class="boost-time" id="timerText">
+                Ready
+            </div>
+
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <button class="boost-button" id="boostButton">
+            START BOOST
+        </button>
+
+    </div>
+
+
+    <div class="section-title">
+        QUICK ACTIONS
+    </div>
+
+    <div class="quick-grid">
+
+        <div class="quick" onclick="ramCheck()">
+            <div class="quick-icon">RAM</div>
+            <div class="quick-name">RAM Check</div>
+            <div class="quick-value" id="ramValue">Checking...</div>
+        </div>
+
+        <div class="quick" onclick="networkCheck()">
+            <div class="quick-icon">NET</div>
+            <div class="quick-name">Network</div>
+            <div class="quick-value" id="networkValue">Online</div>
+        </div>
+
+        <div class="quick" onclick="batteryCheck()">
+            <div class="quick-icon">BAT</div>
+            <div class="quick-name">Battery</div>
+            <div class="quick-value" id="batteryValue">Checking...</div>
+        </div>
+
+        <div class="quick" onclick="devicePage()">
+            <div class="quick-icon">DEV</div>
+            <div class="quick-name">Device</div>
+            <div class="quick-value">View Info</div>
+        </div>
+
+    </div>
+
+
+    <div class="section-title">
+        BOOST MODES
+    </div>
+
+    <div class="card">
+
+        <div class="mode">
+
+            <div class="mode-info">
+                <div class="mode-name">Game Mode</div>
+                <div class="mode-desc">
+                    Fokus untuk sesi gaming.
+                </div>
+            </div>
+
+            <label class="switch">
+                <input type="checkbox" id="gameMode" checked>
+                <span class="slider"></span>
+            </label>
+
+        </div>
+
+
+        <div class="mode">
+
+            <div class="mode-info">
+                <div class="mode-name">Focus Mode</div>
+                <div class="mode-desc">
+                    Mengurangi gangguan.
+                </div>
+            </div>
+
+            <label class="switch">
+                <input type="checkbox" id="focusMode">
+                <span class="slider"></span>
+            </label>
+
+        </div>
+
+
+        <div class="mode">
+
+            <div class="mode-info">
+                <div class="mode-name">Performance Mode</div>
+                <div class="mode-desc">
+                    Mode performa simulasi.
+                </div>
+            </div>
+
+            <label class="switch">
+                <input type="checkbox" id="performanceMode">
+                <span class="slider"></span>
+            </label>
+
+        </div>
+
+
+        <div class="mode">
+
+            <div class="mode-info">
+                <div class="mode-name">Battery Saver</div>
+                <div class="mode-desc">
+                    Membantu menghemat baterai.
+                </div>
+            </div>
+
+            <label class="switch">
+                <input type="checkbox" id="batterySaver">
+                <span class="slider"></span>
+            </label>
+
+        </div>
+
+    </div>
+
+
+    <!-- PREMIUM -->
+
+    <div class="card premium-card" id="premiumCard">
+
+        <div class="premium-header">
+
+            <div class="premium-title">
+                Gamer Booster Premium
+            </div>
+
+            <div class="premium-badge">
+                NO ADS
+            </div>
+
+        </div>
+
+        <div class="card-desc">
+            Premium hanya menghilangkan iklan.
+        </div>
+
+        <div class="premium-list">
+            ✓ Tanpa iklan<br>
+            ✓ Tetap mendapatkan semua fitur utama<br>
+            ✓ Tidak ada bonus performa palsu
+        </div>
+
+        <button
+            class="premium-button"
+            id="premiumButton"
+            onclick="buyPremium()">
+            GET PREMIUM
+        </button>
+
+        <button
+            class="restore-button"
+            onclick="restorePurchase()">
+            RESTORE PURCHASE
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= GAMES ================= -->
+
+<section class="page" id="gamesPage">
+
+    <h1 class="page-title">Games</h1>
+
+    <p class="page-subtitle">
+        Pilih game untuk sesi boost.
+    </p>
+
+    <div class="game-list">
+
+        <div class="game-item" onclick="selectGame('Mobile Legends')" id="game-Mobile-Legends">
+            <div class="game-icon">ML</div>
+            <div>
+                <div class="game-name">Mobile Legends</div>
+                <div class="game-status">MOBA</div>
+            </div>
+        </div>
+
+        <div class="game-item" onclick="selectGame('PUBG Mobile')" id="game-PUBG-Mobile">
+            <div class="game-icon">PUBG</div>
+            <div>
+                <div class="game-name">PUBG Mobile</div>
+                <div class="game-status">Battle Royale</div>
+            </div>
+        </div>
+
+        <div class="game-item" onclick="selectGame('Free Fire')" id="game-Free-Fire">
+            <div class="game-icon">FF</div>
+            <div>
+                <div class="game-name">Free Fire</div>
+                <div class="game-status">Battle Royale</div>
+            </div>
+        </div>
+
+        <div class="game-item" onclick="selectGame('Roblox')" id="game-Roblox">
+            <div class="game-icon">RB</div>
+            <div>
+                <div class="game-name">Roblox</div>
+                <div class="game-status">Gaming Platform</div>
+            </div>
+        </div>
+
+        <div class="game-item" onclick="selectGame('Minecraft')" id="game-Minecraft">
+            <div class="game-icon">MC</div>
+            <div>
+                <div class="game-name">Minecraft</div>
+                <div class="game-status">Sandbox</div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= DEVICE ================= -->
+
+<section class="page" id="devicePage">
+
+    <h1 class="page-title">Device</h1>
+
+    <p class="page-subtitle">
+        Informasi perangkat kamu.
+    </p>
+
+    <div class="card">
+
+        <div class="info-row">
+            <div class="info-label">Platform</div>
+            <div class="info-value" id="devicePlatform">-</div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-label">Browser</div>
+            <div class="info-value" id="deviceBrowser">-</div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-label">Screen</div>
+            <div class="info-value" id="deviceScreen">-</div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-label">Memory</div>
+            <div class="info-value" id="deviceMemory">-</div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-label">CPU Cores</div>
+            <div class="info-value" id="deviceCPU">-</div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-label">Connection</div>
+            <div class="info-value" id="deviceOnline">-</div>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= SETTINGS ================= -->
+
+<section class="page" id="settingsPage">
+
+    <h1 class="page-title">Settings</h1>
+
+    <p class="page-subtitle">
+        Atur pengalaman Gamer Booster.
+    </p>
+
+
+    <div class="card">
+
+        <div class="setting-row">
+
+            <div>
+                <div class="setting-name">Notifications</div>
+                <div class="setting-desc">
+                    Notifikasi sesi boost.
+                </div>
+            </div>
+
+            <label class="switch">
+                <input type="checkbox" id="notifications">
+                <span class="slider"></span>
+            </label>
+
+        </div>
+
+
+        <div class="setting-row">
+
+            <div>
+                <div class="setting-name">Auto Boost</div>
+                <div class="setting-desc">
+                    Mulai boost secara otomatis.
+                </div>
+            </div>
+
+            <label class="switch">
+                <input type="checkbox" id="autoBoost">
+                <span class="slider"></span>
+            </label>
+
+        </div>
+
+
+        <div class="setting-row">
+
+            <div>
+                <div class="setting-name">Vibration</div>
+                <div class="setting-desc">
+                    Getaran pada tombol.
+                </div>
+            </div>
+
+            <label class="switch">
+                <input type="checkbox" id="vibration" checked>
+                <span class="slider"></span>
+            </label>
+
+        </div>
+
+
+        <div class="setting-row">
+
+            <div>
+                <div class="setting-name">Dark Mode</div>
+                <div class="setting-desc">
+                    Tampilan gelap Gamer Booster.
+                </div>
+            </div>
+
+            <label class="switch">
+                <input type="checkbox" id="darkMode" checked>
+                <span class="slider"></span>
+            </label>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-title">
+            Premium Status
+        </div>
+
+        <div class="card-desc" id="premiumStatus">
+            Premium belum aktif.
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-title">
+            Gamer Booster
+        </div>
+
+        <div class="card-desc">
+            Version 5.1<br><br>
+            Web Preview
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+
+
+<!-- ================= NAVIGATION ================= -->
+
+<nav class="bottom-nav">
+
+    <button class="nav-btn active" onclick="showPage('homePage',this)">
+        <div class="nav-icon">HOME</div>
+        <div class="nav-text">Home</div>
+    </button>
+
+    <button class="nav-btn" onclick="showPage('gamesPage',this)">
+        <div class="nav-icon">GAME</div>
+        <div class="nav-text">Games</div>
+    </button>
+
+    <button class="nav-btn" onclick="showPage('devicePage',this)">
+        <div class="nav-icon">DEV</div>
+        <div class="nav-text">Device</div>
+    </button>
+
+    <button class="nav-btn" onclick="showPage('settingsPage',this)">
+        <div class="nav-icon">SET</div>
+        <div class="nav-text">Settings</div>
+    </button>
+
+</nav>
+
+
+
+<!-- TOAST -->
+
+<div class="toast" id="toast"></div>
+
+
+
+<script>
+
+/* =========================================================
+   GAMER BOOSTER V5.1
+   ========================================================= */
+
+
+/* ================= STATE ================= */
+
+let isPremium =
+    localStorage.getItem("isPremium") === "true";
+
+let selectedGame =
+    localStorage.getItem("selectedGame") ||
+    "Mobile Legends";
+
+let boostRunning = false;
+let boostSeconds = 60;
+let boostInterval = null;
+
+
+/* ================= NATIVE BRIDGE ================= */
+
+/*
+   Bagian ini nanti akan digunakan oleh APK Android.
+
+   Contoh Android nanti:
+   AndroidBridge.buyPremium()
+
+   Web version sekarang hanya menampilkan pesan.
+*/
+
+window.GamerBoosterNative = {
+
+    buyPremium:function(){
+
+        if(
+            window.AndroidBridge &&
+            typeof window.AndroidBridge.buyPremium === "function"
+        ){
+
+            window.AndroidBridge.buyPremium();
+
+        }else{
+
+            toast(
+                "Pembelian Premium tersedia setelah APK Android terhubung."
+            );
+
+        }
+
+    },
+
+
+    restorePurchases:function(){
+
+        if(
+            window.AndroidBridge &&
+            typeof window.AndroidBridge.restorePurchases === "function"
+        ){
+
+            window.AndroidBridge.restorePurchases();
+
+        }else{
+
+            toast(
+                "Restore tersedia di versi APK Android."
+            );
+
+        }
+
+    }
+
+};
+
+
+/*
+   Dipanggil Android setelah pembayaran berhasil.
+*/
+
+window.setPremiumFromNative = function(active){
+
+    isPremium = !!active;
+
+    localStorage.setItem(
+        "isPremium",
+        String(isPremium)
+    );
+
+    updatePremiumUI();
+
+};
+
+
+/* ================= NAVIGATION ================= */
+
+function showPage(pageId, button){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(page=>{
+            page.classList.remove("active");
+        });
+
+    document
+        .getElementById(pageId)
+        .classList.add("active");
+
+
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(btn=>{
+            btn.classList.remove("active");
+        });
+
+
+    if(button){
+        button.classList.add("active");
+    }
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+function devicePage(){
+
+    const buttons =
+        document.querySelectorAll(".nav-btn");
+
+    showPage("devicePage",buttons[2]);
+
+}
+
+
+/* ================= GAME ================= */
+
+const gameSelect =
+    document.getElementById("gameSelect");
+
+
+gameSelect.value = selectedGame;
+
+
+gameSelect.addEventListener(
+    "change",
+    function(){
+
+        selectedGame = this.value;
+
+        localStorage.setItem(
+            "selectedGame",
+            selectedGame
+        );
+
+        highlightGame();
+
+        toast(
+            "Game dipilih: " + selectedGame
+        );
+
+    }
+);
+
+
+function selectGame(game){
+
+    selectedGame = game;
+
+    localStorage.setItem(
+        "selectedGame",
+        selectedGame
+    );
+
+    gameSelect.value = selectedGame;
+
+    highlightGame();
+
+    toast(
+        game + " dipilih."
+    );
+
+    const buttons =
+        document.querySelectorAll(".nav-btn");
+
+    showPage("homePage",buttons[0]);
+
+}
+
+
+function highlightGame(){
+
+    document
+        .querySelectorAll(".game-item")
+        .forEach(item=>{
+            item.classList.remove("selected");
+        });
+
+
+    const id =
+        "game-" +
+        selectedGame.replaceAll(" ","-");
+
+
+    const selected =
+        document.getElementById(id);
+
+
+    if(selected){
+        selected.classList.add("selected");
+    }
+
+}
+
+
+highlightGame();
+
+
+/* ================= BOOST ================= */
+
+const boostButton =
+    document.getElementById("boostButton");
+
+const boostCircle =
+    document.getElementById("boostCircle");
+
+const boostText =
+    document.getElementById("boostText");
+
+const timerText =
+    document.getElementById("timerText");
+
+const progressBar =
+    document.getElementById("progressBar");
+
+
+boostButton.addEventListener(
+    "click",
+    function(){
+
+        if(boostRunning){
+
+            stopBoost();
+
+        }else{
+
+            startBoost();
+
+        }
+
+    }
+);
+
+
+function startBoost(){
+
+    boostRunning = true;
+
+    boostSeconds = 60;
+
+    boostCircle.classList.add("running");
+
+    boostButton.classList.add("stop");
+
+    boostButton.innerText =
+        "STOP BOOST";
+
+    boostText.innerText =
+        "BOOSTING";
+
+    document.getElementById(
+        "headerStatus"
+    ).innerText = "BOOSTING";
+
+
+    toast(
+        "Boost dimulai untuk " + selectedGame
+    );
+
+
+    vibrate();
+
+
+    updateTimer();
+
+
+    boostInterval =
+        setInterval(function(){
+
+            boostSeconds--;
+
+            updateTimer();
+
+
+            if(boostSeconds <= 0){
+
+                finishBoost();
+
+            }
+
+        },1000);
+
+}
+
+
+function updateTimer(){
+
+    timerText.innerText =
+        boostSeconds + " sec";
+
+
+    const progress =
+        ((60 - boostSeconds) / 60) * 100;
+
+
+    progressBar.style.width =
+        progress + "%";
+
+}
+
+
+function stopBoost(){
+
+    clearInterval(boostInterval);
+
+    boostInterval = null;
+
+    boostRunning = false;
+
+    boostCircle.classList.remove("running");
+
+    boostButton.classList.remove("stop");
+
+    boostButton.innerText =
+        "START BOOST";
+
+    boostText.innerText =
+        "BOOST";
+
+    timerText.innerText =
+        "Stopped";
+
+    progressBar.style.width =
+        "0%";
+
+    document.getElementById(
+        "headerStatus"
+    ).innerText = "READY";
+
+
+    toast("Boost dihentikan.");
+
+    vibrate();
+
+}
+
+
+function finishBoost(){
+
+    clearInterval(boostInterval);
+
+    boostInterval = null;
+
+    boostRunning = false;
+
+    boostCircle.classList.remove("running");
+
+    boostButton.classList.remove("stop");
+
+    boostButton.innerText =
+        "START BOOST";
+
+    boostText.innerText =
+        "DONE";
+
+    timerText.innerText =
+        "Session complete";
+
+    progressBar.style.width =
+        "100%";
+
+    document.getElementById(
+        "headerStatus"
+    ).innerText = "READY";
+
+
+    toast(
+        "Boost selesai."
+    );
+
+    vibrate();
+
+
+    /*
+       IKLAN NANTI
+
+       Di APK Android, setelah sesi tertentu,
+       AdMob interstitial dapat dipanggil di sini.
+
+       Premium user tidak akan melihat iklan.
+    */
+
+}
+
+
+/* ================= QUICK ACTIONS ================= */
+
+function ramCheck(){
+
+    let value =
+        navigator.deviceMemory || "Unknown";
+
+    if(value !== "Unknown"){
+        value += " GB";
+    }
+
+    document.getElementById(
+        "ramValue"
+    ).innerText = value;
+
+    toast(
+        "RAM terdeteksi: " + value
+    );
+
+}
+
+
+function networkCheck(){
+
+    const online =
+        navigator.onLine;
+
+    const value =
+        online ? "Online" : "Offline";
+
+
+    document.getElementById(
+        "networkValue"
+    ).innerText = value;
+
+
+    toast(
+        "Network: " + value
+    );
+
+}
+
+
+async function batteryCheck(){
+
+    const element =
+        document.getElementById(
+            "batteryValue"
+        );
+
+
+    if(
+        "getBattery" in navigator
+    ){
+
+        try{
+
+            const battery =
+                await navigator.getBattery();
+
+            const percent =
+                Math.round(
+                    battery.level * 100
+                );
+
+            element.innerText =
+                percent + "%";
+
+            toast(
+                "Battery: " + percent + "%"
+            );
+
+        }catch{
+
+            element.innerText =
+                "Unavailable";
+
+            toast(
+                "Informasi battery tidak tersedia."
+            );
+
+        }
+
+    }else{
+
+        element.innerText =
+            "Unavailable";
+
+        toast(
+            "Browser tidak menyediakan informasi battery."
+        );
+
+    }
+
+}
+
+
+/* ================= DEVICE ================= */
+
+function detectDevice(){
+
+    document.getElementById(
+        "devicePlatform"
+    ).innerText =
+        navigator.platform || "Unknown";
+
+
+    document.getElementById(
+        "deviceBrowser"
+    ).innerText =
+        getBrowser();
+
+
+    document.getElementById(
+        "deviceScreen"
+    ).innerText =
+        window.screen.width +
+        " × " +
+        window.screen.height;
+
+
+    document.getElementById(
+        "deviceMemory"
+    ).innerText =
+        navigator.deviceMemory
+        ? navigator.deviceMemory + " GB"
+        : "Unavailable";
+
+
+    document.getElementById(
+        "deviceCPU"
+    ).innerText =
+        navigator.hardwareConcurrency
+        ? navigator.hardwareConcurrency + " cores"
+        : "Unavailable";
+
+
+    document.getElementById(
+        "deviceOnline"
+    ).innerText =
+        navigator.onLine
+        ? "Online"
+        : "Offline";
+
+}
+
+
+function getBrowser(){
+
+    const ua =
+        navigator.userAgent;
+
+
+    if(
+        /CriOS/i.test(ua)
+    ){
+        return "Chrome iOS";
+    }
+
+
+    if(
+        /FxiOS/i.test(ua)
+    ){
+        return "Firefox iOS";
+    }
+
+
+    if(
+        /Safari/i.test(ua) &&
+        !/Chrome/i.test(ua)
+    ){
+        return "Safari";
+    }
+
+
+    if(
+        /Chrome/i.test(ua)
+    ){
+        return "Chrome";
+    }
+
+
+    return "Browser";
+
+}
+
+
+detectDevice();
+
+
+/* ================= PREMIUM ================= */
+
+function updatePremiumUI(){
+
+    const ad =
+        document.getElementById(
+            "adBanner"
+        );
+
+    const button =
+        document.getElementById(
+            "premiumButton"
+        );
+
+    const status =
+        document.getElementById(
+            "premiumStatus"
+        );
+
+
+    if(isPremium){
+
+        /*
+           PREMIUM = HANYA MENGHILANGKAN IKLAN
+        */
+
+        ad.classList.add("hidden");
+
+        button.innerText =
+            "PREMIUM AKTIF";
+
+        button.disabled = true;
+
+        status.innerText =
+            "Premium aktif — iklan dihilangkan.";
+
+    }else{
+
+        ad.classList.remove("hidden");
+
+        button.innerText =
+            "GET PREMIUM";
+
+        button.disabled = false;
+
+        status.innerText =
+            "Premium belum aktif.";
+
+    }
+
+}
+
+
+function buyPremium(){
+
+    /*
+       Kalau sudah menjadi APK,
+       AndroidBridge akan menangani
+       Google Play Billing.
+    */
+
+    if(
+        window.AndroidBridge &&
+        typeof window.AndroidBridge.buyPremium === "function"
+    ){
+
+        window.AndroidBridge.buyPremium();
+
+        return;
+
+    }
+
+
+    /*
+       WEB DEMO
+
+       Tidak ada pembayaran sungguhan.
+    */
+
+    const answer =
+        confirm(
+            "Premium di versi web adalah DEMO.\n\n" +
+            "Aktifkan Premium untuk pengujian?"
+        );
+
+
+    if(!answer){
+        return;
+    }
+
+
+    isPremium = true;
+
+    localStorage.setItem(
+        "isPremium",
+        "true"
+    );
+
+
+    updatePremiumUI();
+
+
+    toast(
+        "Premium DEMO aktif — iklan dihilangkan."
+    );
+
+}
+
+
+function restorePurchase(){
+
+    if(
+        window.AndroidBridge &&
+        typeof window.AndroidBridge.restorePurchases === "function"
+    ){
+
+        window.AndroidBridge.restorePurchases();
+
+        return;
+
+    }
+
+
+    toast(
+        "Restore Purchase tersedia setelah APK terhubung."
+    );
+
+}
+
+
+updatePremiumUI();
+
+
+/* ================= SETTINGS ================= */
+
+const settingIds = [
+
+    "notifications",
+    "autoBoost",
+    "vibration",
+    "darkMode",
+    "gameMode",
+    "focusMode",
+    "performanceMode",
+    "batterySaver"
+
+];
+
+
+settingIds.forEach(function(id){
+
+    const element =
+        document.getElementById(id);
+
+
+    if(!element){
+        return;
+    }
+
+
+    const saved =
+        localStorage.getItem(
+            "setting_" + id
+        );
+
+
+    if(saved !== null){
+
+        element.checked =
+            saved === "true";
+
+    }
+
+
+    element.addEventListener(
+        "change",
+        function(){
+
+            localStorage.setItem(
+                "setting_" + id,
+                String(this.checked)
+            );
+
+
+            if(id === "darkMode"){
+
+                applyDarkMode(
+                    this.checked
+                );
+
+            }
+
+
+            if(id === "vibration"){
+                vibrate();
+            }
+
+
+            toast(
+                this.checked
+                ? id + " aktif"
+                : id + " nonaktif"
+            );
+
+        }
+    );
+
+});
+
+
+function applyDarkMode(enabled){
+
+    document.body.classList.toggle(
+        "light",
+        !enabled
+    );
+
+}
+
+
+const darkMode =
+    document.getElementById("darkMode");
+
+
+applyDarkMode(
+    darkMode.checked
+);
+
+
+/* ================= VIBRATION ================= */
+
+function vibrate(){
+
+    const vibration =
+        document.getElementById(
+            "vibration"
+        );
+
+
+    if(
+        vibration &&
+        vibration.checked &&
+        navigator.vibrate
+    ){
+
+        navigator.vibrate(20);
+
+    }
+
+}
+
+
+/* ================= TOAST ================= */
+
+let toastTimeout;
+
+
+function toast(message){
+
+    const element =
+        document.getElementById("toast");
+
+
+    element.innerText =
+        message;
+
+
+    element.classList.add("show");
+
+
+    clearTimeout(
+        toastTimeout
+    );
+
+
+    toastTimeout =
+        setTimeout(function(){
+
+            element.classList.remove(
+                "show"
+            );
+
+        },2500);
+
+}
+
+
+/* ================= ONLINE ================= */
+
+window.addEventListener(
+    "online",
+    function(){
+
+        document.getElementById(
+            "networkValue"
+        ).innerText =
+            "Online";
+
+        document.getElementById(
+            "deviceOnline"
+        ).innerText =
+            "Online";
+
+    }
+);
+
+
+window.addEventListener(
+    "offline",
+    function(){
+
+        document.getElementById(
+            "networkValue"
+        ).innerText =
+            "Offline";
+
+        document.getElementById(
+            "deviceOnline"
+        ).innerText =
+            "Offline";
+
+    }
+);
+
+
+/* ================= INITIAL ================= */
+
+ramCheck();
+
+networkCheck();
+
+batteryCheck();
+
+detectDevice();
+
+updatePremiumUI();
+
+
+/* ================= AUTO BOOST ================= */
+
+const autoBoost =
+    document.getElementById(
+        "autoBoost"
+    );
+
+
+if(autoBoost.checked){
+
+    /*
+       Delay supaya halaman selesai
+       dimuat terlebih dahulu.
+    */
+
+    setTimeout(function(){
+
+        if(!boostRunning){
+
+            startBoost();
+
+        }
+
+    },1500);
+
+}
+
+</script>
+
+</body>
+</html>
