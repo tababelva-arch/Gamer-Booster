@@ -1,0 +1,71 @@
+name: Sign Gamer Booster APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sign:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android Build Tools
+        run: sdkmanager "build-tools;35.0.0"
+
+      - name: Find unsigned APK
+        run: |
+          APK=$(find . -type f -name "*.apk" | head -n 1)
+          if [ -z "$APK" ]; then
+            echo "APK tidak ditemukan"
+            exit 1
+          fi
+          echo "APK ditemukan: $APK"
+          echo "APK_PATH=$APK" >> "$GITHUB_ENV"
+
+      - name: Create temporary keystore
+        run: |
+          keytool -genkeypair \
+            -v \
+            -keystore gamer-booster.jks \
+            -alias gamerbooster \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -storepass "${{ secrets.KEYSTORE_PASSWORD }}" \
+            -keypass "${{ secrets.KEYSTORE_PASSWORD }}" \
+            -dname "CN=Gamer Booster, OU=App, O=Gamer Booster, L=Indonesia, C=ID"
+
+      - name: Sign APK
+        run: |
+          mkdir -p output
+
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" sign \
+            --ks gamer-booster.jks \
+            --ks-key-alias gamerbooster \
+            --ks-pass "pass:${{ secrets.KEYSTORE_PASSWORD }}" \
+            --key-pass "pass:${{ secrets.KEYSTORE_PASSWORD }}" \
+            --out output/gamer-booster-signed.apk \
+            "$APK_PATH"
+
+      - name: Verify APK
+        run: |
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify \
+            --verbose \
+            output/gamer-booster-signed.apk
+
+      - name: Upload signed APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Gamer-Booster-Signed
+          path: output/gamer-booster-signed.apk
